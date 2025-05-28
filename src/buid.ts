@@ -1,3 +1,4 @@
+import { randomBytes } from "crypto";
 import fs from "fs";
 import path from "path";
 
@@ -352,12 +353,11 @@ export class BuidGenerator {
   }
   public getExtraBuid(): string {
     let extra = "-";
-    for(let i = 0  ;  i < this.EXTRALENGTH ; i++){
-    extra += this.primeryKey[this.getRandomInt(0, this.primeryKey.length - 1)];
-
-}
+    extra += randomBytes(Math.ceil(this.EXTRALENGTH / 2)).toString('hex').slice(0, this.EXTRALENGTH); 
     return this.bigIntToHex(this.getId()) + extra;
   }
+
+  
   public getEncodeBuid(): string {
     return this.encode(this.getBuid());
   }
@@ -484,6 +484,7 @@ export class BuidGenerator {
     return this.extraKeysMap[`${char}`];
   }
   private getRandomInt(min, max) {
+    
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
