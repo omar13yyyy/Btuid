@@ -42,8 +42,8 @@ yarn add btuid
 
 import {BuidGenerator,} from 'btuid'
 import path from 'path';
-
-const filePath = path.join(__dirname, 'dataTableFame.json');
+//create btuidFiles folder in your project root 
+const filePath = path.join("your_project_root/btuidFiles", 'dataTableName.json');
 const generator = new BuidGenerator( {path: filePath} );
 const Btuid = generator.getExtraBuid(); //get btuid
 
