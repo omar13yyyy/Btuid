@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {BtuidGenerator,} from '../src/btuid'
+import {BtuidGenerator,} from '../src/btuid'//'btuid' if install it from npm
 import path from 'path';
 
 
