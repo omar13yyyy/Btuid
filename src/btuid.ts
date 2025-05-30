@@ -1,7 +1,19 @@
 
+// Copyright 2025 Omar Alhaj Ali
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 import { randomBytes } from "crypto";
 import fs from "fs";
-import path from "path";
 
 export interface DegreeConfig {
   pageSize: number;
@@ -292,11 +304,9 @@ export class BtuidGenerator {
   }: ConstructorParams) {
     this.saveTime=saveTime;
     this.intiEqualKeys();
-    // this.printEqualKeys()
-    //todo other if smallestShift and sort
-    console.log("path : ", path);
+    if (!fs.existsSync(path)) {
     this.syncSaveObject(`${path}`, this.restConfigData);
-
+    }  
     this.startValue = startValue;
 
     this.length =
@@ -307,7 +317,6 @@ export class BtuidGenerator {
     this.degreeConfig = degreeConfig;
     this.overhead = this.sumOverhead();
     this.entryOverhead = this.degreeConfig.pageSize / this.overhead;
-    //this.degree = degreeConfig.degree;
 
     if (degreeConfig.degree == 0)
       this.degree = Math.floor(
@@ -371,8 +380,7 @@ export class BtuidGenerator {
   }
   public getId(): bigint {
     let start: bigint = 0n;
-    // console.log("chunkCount", this.chunkCount);
-    //  console.log("indexInCurrentDepth", this.indexInCurrentDepth);
+
 
     start = this.getNextInDepthAndIndex(
       this.depth,
@@ -424,17 +432,10 @@ export class BtuidGenerator {
     startValue: bigint,
     usedIdCount: bigint
   ): bigint {
-    // console.log("depth ", depth);
-    // console.log("degree ", degree);
-    // console.log("chunkLength ", chunkLength);
-    // console.log("index ", index);
-    // console.log("startValue ", startValue);
-    // console.log("usedIdCount ", usedIdCount);
 
     const usedItemInlastLevel = BigInt((2 * degree - 1) * (depth - 1));
     const multiPart = chunkLength * index;
     const start: bigint = startValue + usedItemInlastLevel + multiPart;
-    //  console.log("start ", start);
 
     return start;
   }
@@ -502,8 +503,7 @@ export class BtuidGenerator {
       let extraKeyForPrimeryKeyCount = this.getRandomInt(2, 4);
       for (let j = 0; j < extraKeyForPrimeryKeyCount; j++) {
         let extraKeyIndex = this.getRandomInt(0, this.ExtraKeys.length);
-        //console.log("primeryKeyMapKey : ",primeryKeyMapKey)
-        // console.log("this.equalKeys[primeryKeyMapKey] : ",this.equalKeys[primeryKeyMapKey])
+ 
         this.extraKeysMap[this.ExtraKeys[extraKeyIndex]] = primeryKeyMapKey;
         this.equalKeys[primeryKeyMapKey].push(this.ExtraKeys[extraKeyIndex]);
         this.ExtraKeys.splice(extraKeyIndex, 1);
@@ -544,8 +544,6 @@ export class BtuidGenerator {
   }
   return value;
 });
-
-    console.log("Object read from file:", parsedObject);
     return parsedObject;
   }
 }

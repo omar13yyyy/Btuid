@@ -17,12 +17,20 @@ import path from 'path';
 
 const filePath = path.join(__dirname, 'dataTableFame.json');
 const generator = new BtuidGenerator( {path: filePath} );
-    const extraBtuid = generator.getExtraBtuid(); //get btuid
-    const BigIntbtuid = generator.getId();
-    const encodeBtuid =generator.getEncodeBtuid()
-    const decodeBtuid = generator.decodeToBtuid(encodeBtuid);
-    generator.decodeToBigint(encodeBtuid)
+    const extraBtuid = generator.getExtraBtuid(); //get hex btuid 
+    console.log(extraBtuid) //06e77028e74c0082-26c4838e4a1f408b
+    
+    const BigIntbtuid = generator.getId();//get bigint id 
+    console.log(BigIntbtuid) //812356443328774771
 
+    const encodeBtuid =generator.getEncodeBtuid()  //get encode text id 
+    console.log(encodeBtuid) //EIa4F39a3ISdt46G
+
+    const decodeBtuid = generator.decodeToBtuid(encodeBtuid); //convert encoded btuid text to hex
+    console.log(decodeBtuid) //0fa4b39a3fed0464
+
+   const decodeBtuidBigint= generator.decodeToBigint(encodeBtuid) //convert encoded btuid text to bigint
+    console.log(decodeBtuidBigint) //1127223281828299876n
 
 
 
