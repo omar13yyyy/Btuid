@@ -1,4 +1,4 @@
-# 🔐 Buid
+# 🔐 Btuid
 
 **A fast, indexable, secure, and unique UUID generator for Node.js and modern JavaScript environments.**
 
@@ -21,7 +21,7 @@
 * 💾 **Requires storage access** — to fully benefit from index performance Requires storage access.
 
 ---
-| Feature            | `fast-uuid` 🔥            | `uuid v4` 🎲             | `nanoid` ✨             |
+| Feature            | `btuid` 🔥            | `uuid v4` 🎲             | `nanoid` ✨             |
 | ------------------ | ------------------------- | ------------------------ | ----------------------  |
 | **Speed**          | ⚡️ Very fast              | 🐢 Slower                | ⚡️ Fast                 |
 | **Security**       | ✅ High                   | ✅ High                  | ✅ High                 |
@@ -35,11 +35,16 @@
 ## 📦 Installation
 
 ```bash
-npm install Buid
+npm install btuid
 # or
-yarn add Buid
+yarn add btuid
 
 🤝 Contributing
 
 We welcome contributions, issues, and feature requests!
 Please open an issue or submit a PR via GitHub.
+
+## 🔖 Keywords
+
+`uuid` &nbsp;&bull;&nbsp; `buid` &nbsp;&bull;&nbsp; `id generator` &nbsp;&bull;&nbsp; `secure id` &nbsp;&bull;&nbsp; `indexable uuid`  
+`typescript` &nbsp;&bull;&nbsp; `javascript` &nbsp;&bull;&nbsp; `performance` &nbsp;&bull;&nbsp; `fast uuid` &nbsp;&bull;&nbsp; `crypto uuid`
