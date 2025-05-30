@@ -3,11 +3,10 @@
 node_modules/
 .env
 package-lock.json
-.npmignore 
-app.ts
+.gitignore
 #seeder
 modules/database/seeder/CSV
-
+app.ts
 # IDEs
 .vscode/
 .fleet/
