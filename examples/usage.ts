@@ -17,11 +17,12 @@ import path from 'path';
 
 const filePath = path.join(__dirname, 'dataTableFame.json');
 const generator = new BuidGenerator( {path: filePath} );
-    const extraBuid = generator.getExtraBuid();
+    const extraBuid = generator.getExtraBuid(); //get btuid
     const BigIntbuid = generator.getId();
     const encodeBuid =generator.getEncodeBuid()
     const decodeBuid = generator.decodeToBuid(encodeBuid);
     generator.decodeToBigint(encodeBuid)
+
 
 
 

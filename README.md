@@ -38,6 +38,14 @@
 npm install btuid
 # or
 yarn add btuid
+🛠 Usage
+
+import {BuidGenerator,} from 'btuid'
+import path from 'path';
+
+const filePath = path.join(__dirname, 'dataTableFame.json');
+const generator = new BuidGenerator( {path: filePath} );
+const Btuid = generator.getExtraBuid(); //get btuid
 
 🤝 Contributing
 
