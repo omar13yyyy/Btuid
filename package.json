@@ -2,9 +2,10 @@
   "name": "buid",
   "version": "1.0.0",
   "description": "Buid library provides an interface to generate UIDs (Unique Identifiers) that are safe, cryptographically secure, and unpredictable, ensuring that every UUID is unique. The library also supports B+tree indexing, which makes it ideal for use in database systems or cloud data indexing, ensuring efficient geographical and temporal distribution.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

@@ -1,16 +1,3 @@
-// Copyright 2025 Omar Alhaj Ali
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 
 import { randomBytes } from "crypto";
 import fs from "fs";
@@ -65,7 +52,7 @@ export class BuidGenerator {
     startValue: 0n,
     usedIdCount: 0n,
   };
-  private ExtraKeys = [
+  private ExtraKeys :string[]= [
     "g",
     "h",
     "i",
@@ -119,7 +106,7 @@ export class BuidGenerator {
     "Ø",
     "ø",
   ];
-  private ExtraKeysForExtraUUID = [
+  private ExtraKeysForExtraUUID: string []= [
     "g",
     "h",
     "i",
@@ -173,7 +160,7 @@ export class BuidGenerator {
     "Ø",
     "ø",
   ];
-  private extraKeysMap = {
+  private extraKeysMap : { [key: string]: string }= {
     "0": "0",
     "1": "1",
     "2": "2",
@@ -243,7 +230,7 @@ export class BuidGenerator {
     Ø: "1",
     ø: "1",
   };
-  private primeryKey = [
+  private primeryKey :string[]= [
     "0",
     "1",
     "2",
@@ -261,7 +248,7 @@ export class BuidGenerator {
     "e",
     "f",
   ];
-  private equalKeys = {
+  private equalKeys: { [key: string]: string[] } = {
     "0": ["0"],
     "1": ["1"],
     "2": ["2"],
@@ -501,7 +488,7 @@ export class BuidGenerator {
 
     return this.extraKeysMap[`${char}`];
   }
-  private getRandomInt(min, max) {
+  private getRandomInt( min:number , max:number ) {
     
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
@@ -527,7 +514,7 @@ export class BuidGenerator {
     }
   }
 
-  syncSaveObject( path,obj) {
+  syncSaveObject( path:string,obj:RestConfigData) {
     const jsonString = JSON.stringify(obj, (key, value) =>
   typeof value === 'bigint' ? value.toString() : value
 , 2);
@@ -535,7 +522,7 @@ export class BuidGenerator {
     console.log("✅ Object saved to", path);
   }
 
-  saveObject( path,obj) {
+  saveObject( path:string,obj:RestConfigData) {
     const jsonString = JSON.stringify(obj, (key, value) =>
   typeof value === 'bigint' ? value.toString() : value
 , 2);
@@ -543,7 +530,7 @@ export class BuidGenerator {
     console.log("✅ Object saved to", path);
   }
 
-  readObject(path) {
+  readObject(path:string) {
     if (!fs.existsSync(`${path}`)) {
       console.log("File does not exist.");
       return null;
