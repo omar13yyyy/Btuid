@@ -1,10 +1,10 @@
 {
   "name": "btuid",
   "version": "1.0.4",
-  "description": "Buid library provides an interface to generate UIDs (Unique Identifiers) that are safe, cryptographically secure, and unpredictable, ensuring that every UUID is unique. The library also supports B+tree indexing, which makes it ideal for use in database systems or cloud data indexing, ensuring efficient geographical and temporal distribution.",
+  "description": "Btuid library provides an interface to generate UIDs (Unique Identifiers) that are safe, cryptographically secure, and unpredictable, ensuring that every UUID is unique. The library also supports B+tree indexing, which makes it ideal for use in database systems or cloud data indexing, ensuring efficient geographical and temporal distribution.",
   "keywords": [
     "uuid",
-    "buid",
+    "btuid",
     "id-generator",
     "fast-id",
     "secure-uuid",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/omar13yyyy/Buid"
+    "url": "https://github.com/omar13yyyy/Btuid"
   },
   "author": "Omar Alhaj Ali",
   "license": "Apache-2.0",

@@ -40,12 +40,12 @@ npm install btuid
 yarn add btuid
 🛠 Usage
 
-import {BuidGenerator,} from 'btuid'
+import {BtuidGenerator,} from 'btuid'
 import path from 'path';
 //create btuidFiles folder in your project root 
 const filePath = path.join("your_project_root/btuidFiles", 'dataTableName.json');
-const generator = new BuidGenerator( {path: filePath} );
-const Btuid = generator.getExtraBuid(); //get btuid
+const generator = new BtuidGenerator( {path: filePath} );
+const Btuid = generator.getExtraBtuid(); //get btuid
 
 🤝 Contributing
 
@@ -54,5 +54,5 @@ Please open an issue or submit a PR via GitHub.
 
 ## 🔖 Keywords
 
-`uuid` &nbsp;&bull;&nbsp; `buid` &nbsp;&bull;&nbsp; `id generator` &nbsp;&bull;&nbsp; `secure id` &nbsp;&bull;&nbsp; `indexable uuid`  
+`uuid` &nbsp;&bull;&nbsp; `btuid` &nbsp;&bull;&nbsp; `id generator` &nbsp;&bull;&nbsp; `secure id` &nbsp;&bull;&nbsp; `indexable uuid`  
 `typescript` &nbsp;&bull;&nbsp; `javascript` &nbsp;&bull;&nbsp; `performance` &nbsp;&bull;&nbsp; `fast uuid` &nbsp;&bull;&nbsp; `crypto uuid`

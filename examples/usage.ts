@@ -11,17 +11,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {BuidGenerator,} from '../src/buid'
+import {BtuidGenerator,} from '../src/btuid'
 import path from 'path';
 
 
 const filePath = path.join(__dirname, 'dataTableFame.json');
-const generator = new BuidGenerator( {path: filePath} );
-    const extraBuid = generator.getExtraBuid(); //get btuid
-    const BigIntbuid = generator.getId();
-    const encodeBuid =generator.getEncodeBuid()
-    const decodeBuid = generator.decodeToBuid(encodeBuid);
-    generator.decodeToBigint(encodeBuid)
+const generator = new BtuidGenerator( {path: filePath} );
+    const extraBtuid = generator.getExtraBtuid(); //get btuid
+    const BigIntbtuid = generator.getId();
+    const encodeBtuid =generator.getEncodeBtuid()
+    const decodeBtuid = generator.decodeToBtuid(encodeBtuid);
+    generator.decodeToBigint(encodeBtuid)
 
 
 

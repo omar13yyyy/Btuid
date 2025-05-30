@@ -12,6 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BuidGenerator = void 0;
-var buid_1 = require("./buid");
-Object.defineProperty(exports, "BuidGenerator", { enumerable: true, get: function () { return buid_1.BuidGenerator; } });
+exports.BtuidGenerator = void 0;
+var btuid_1 = require("./btuid");
+Object.defineProperty(exports, "BtuidGenerator", { enumerable: true, get: function () { return btuid_1.BtuidGenerator; } });

@@ -28,7 +28,7 @@ type ConstructorParams = {
   path?: string;
   saveTime? : number;
 };
-export class BuidGenerator {
+export class BtuidGenerator {
   private  readonly HEX_LENGTH = 16;
   private  readonly EXTRALENGTH = 16;
 
@@ -356,17 +356,17 @@ export class BuidGenerator {
       d.addingPaddingSize
     );
   }
-  public getExtraBuid(): string {
+  public getExtraBtuid(): string {
     let extra = "-";
     extra += randomBytes(Math.ceil(this.EXTRALENGTH / 2)).toString('hex').slice(0, this.EXTRALENGTH); 
     return this.bigIntToHex(this.getId()) + extra;
   }
 
   
-  public getEncodeBuid(): string {
-    return this.encode(this.getBuid());
+  public getEncodeBtuid(): string {
+    return this.encode(this.getBtuid());
   }
-  public getBuid(): string {
+  public getBtuid(): string {
     return this.bigIntToHex(this.getId());
   }
   public getId(): bigint {
@@ -462,7 +462,7 @@ export class BuidGenerator {
 
     return BigInt("0x" + editHexText);
   }
-  public decodeToBuid(encodeHex: string): string {
+  public decodeToBtuid(encodeHex: string): string {
     //TODO Raise performance all function ;
 
     let editHexText;

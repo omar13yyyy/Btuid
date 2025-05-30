@@ -1,1 +1,1 @@
-export { BuidGenerator } from './buid';
+export { BtuidGenerator } from './btuid';
