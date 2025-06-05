@@ -5,9 +5,8 @@ node_modules/
 package-lock.json
 .gitignore
 dist/
-#seeder
-modules/database/seeder/CSV
 app.ts
+
 # IDEs
 .vscode/
 .fleet/

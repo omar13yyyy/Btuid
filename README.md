@@ -91,7 +91,7 @@ let degreeConfig: DegreeConfig = {
 };
 
 const generator = new BtuidGenerator({
-  degreeConfig,
+  degreeConfig : degreeConfig,
   startValue: startValue,              // optional bigint offset
   displacementRate: displacementRate,  // 0 --> 200
   path: filePath,
@@ -113,7 +113,7 @@ let degreeConfig: DegreeConfig = {
 };
 
 const generator = new BtuidGenerator({
-  degreeConfig,
+  degreeConfig:degreeConfig,
   startValue: startValue,
   displacementRate: displacementRate,
   path: filePath,
