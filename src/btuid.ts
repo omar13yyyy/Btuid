@@ -31,6 +31,7 @@ export interface RestConfigData {
   indexInCurrentDepth: bigint;
   startValue: bigint;
   usedIdCount: bigint;
+  code: {[key: string]: string[]};
 }
 export type ConstructorParams = {
   degreeConfig?: DegreeConfig;
@@ -63,6 +64,7 @@ export class BtuidGenerator {
     indexInCurrentDepth: 0n,
     startValue: 0n,
     usedIdCount: 0n,
+    code : {}
   };
   private ExtraKeys :string[]= [
     "g",
@@ -303,10 +305,7 @@ export class BtuidGenerator {
     saveTime = 86400 
   }: ConstructorParams) {
     this.saveTime=saveTime;
-    this.intiEqualKeys();
-    if (!fs.existsSync(path)) {
-    this.syncSaveObject(`${path}`, this.restConfigData);
-    }  
+
     this.startValue = startValue;
 
     this.length =
@@ -330,28 +329,38 @@ export class BtuidGenerator {
     this.chunkCount = BigInt(this.degree * 2) ** BigInt(this.depth);
     this.chunkLength = this.length / this.chunkCount;
     this.data.degree = this.degree;
+    this.restConfigData.chunkLength=this.chunkLength;
+    this.restConfigData.degree = this.degree;
+    this.restConfigData.startValue = this.startValue;
+    this.restConfigData.code = this.equalKeys;
+          this.restConfigData.degree=this.degree;
 
+    this.intiEqualKeys();
+    if (!fs.existsSync(path)) {
+    this.syncSaveObject(`${path}`, this.restConfigData);
+    }  
     if (restConfigData) {
       this.depth = restConfigData.depth;
       this.degree = restConfigData.degree;
-      this.chunkLength = restConfigData.chunkLength;
-      this.indexInCurrentDepth = restConfigData.indexInCurrentDepth;
-      this.startValue = restConfigData.startValue;
-      this.usedIdCount = restConfigData.usedIdCount;
+      this.chunkLength = BigInt(restConfigData.chunkLength);
+      this.indexInCurrentDepth =  BigInt(restConfigData.indexInCurrentDepth);
+      this.startValue =  BigInt(restConfigData.startValue);
+      this.usedIdCount =  BigInt(restConfigData.usedIdCount);
+      this.equalKeys = restConfigData.code
     } else {
       this.restConfigData = this.readObject(path);
-      if (restConfigData) {
+      if (this.restConfigData) {
         this.depth = this.restConfigData.depth;
         this.degree = this.restConfigData.degree;
-        this.chunkLength = this.restConfigData.chunkLength;
-        this.indexInCurrentDepth = this.restConfigData.indexInCurrentDepth;
-        this.startValue = this.restConfigData.startValue;
-        this.usedIdCount = this.restConfigData.usedIdCount;
+        this.chunkLength =  BigInt(this.restConfigData.chunkLength);
+        this.indexInCurrentDepth =  BigInt(this.restConfigData.indexInCurrentDepth);
+        this.startValue =  BigInt(this.restConfigData.startValue);
+        this.usedIdCount =  BigInt(this.restConfigData.usedIdCount);
+        this.equalKeys = this.restConfigData.code;
+        console.log(this.restConfigData.code)
       }
     }
-
     setInterval(() => {
-      console.log("path : ", path);
       this.saveObject(`${path}`, this.restConfigData);
     }, this.saveTime);
   }
@@ -395,6 +404,8 @@ export class BtuidGenerator {
     this.restConfigData.indexInCurrentDepth = this.indexInCurrentDepth;
     if (this.indexInCurrentDepth >= this.chunkCount) {
       this.indexInCurrentDepth = 0n;
+          this.restConfigData.indexInCurrentDepth = this.indexInCurrentDepth;
+
       this.usedIdCount++;
       this.restConfigData.usedIdCount = this.usedIdCount;
 
@@ -509,10 +520,12 @@ export class BtuidGenerator {
     for (let i = 0; i < primeryKeyCount; i++) {
       let index = this.getRandomInt(0, this.primeryKey.length);
       let primeryKeyMapKey = this.primeryKey[index];
+        this.primeryKey.splice(index, 1);
+
       let extraKeyForPrimeryKeyCount = this.getRandomInt(2, 4);
       for (let j = 0; j < extraKeyForPrimeryKeyCount; j++) {
         let extraKeyIndex = this.getRandomInt(0, this.ExtraKeys.length);
- 
+
         this.extraKeysMap[this.ExtraKeys[extraKeyIndex]] = primeryKeyMapKey;
         this.equalKeys[primeryKeyMapKey].push(this.ExtraKeys[extraKeyIndex]);
         this.ExtraKeys.splice(extraKeyIndex, 1);
@@ -528,7 +541,6 @@ export class BtuidGenerator {
   typeof value === 'bigint' ? value.toString() : value
 , 2);
     fs.writeFileSync(`${path}`, jsonString, "utf8");
-    console.log("✅ Object saved to", path);
   }
 
   saveObject( path:string,obj:RestConfigData) {
@@ -536,12 +548,10 @@ export class BtuidGenerator {
   typeof value === 'bigint' ? value.toString() : value
 , 2);
     fs.writeFile(`${path}`, jsonString, "utf8", () => {});
-    console.log("✅ Object saved to", path);
   }
 
   readObject(path:string) {
     if (!fs.existsSync(`${path}`)) {
-      console.log("File does not exist.");
       return null;
     }
 

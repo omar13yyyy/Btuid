@@ -95,7 +95,7 @@ const generator = new BtuidGenerator({
   startValue: startValue,              // optional bigint offset
   displacementRate: displacementRate,  // 0 --> 200
   path: filePath,
-  saveTime: saveTime                   // in seconds, default is one day
+  saveTime: saveTime                   // in mseconds, default is one day
 });
 ```
 
