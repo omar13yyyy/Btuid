@@ -30,7 +30,7 @@ const generator = new BtuidGenerator( {path: filePath} );
     console.log(decodeBtuid) //0fa4b39a3fed0464-d83f6a3a849921a4
 
    const decodeBtuidBigint= generator.decodeToBigint(encodeBtuid) //convert encoded btuid text to bigint
-    console.log(decodeBtuidBigint) //1127223281828299876n
+    console.log(decodeBtuidBigint) //1127223281828299876
 
 
 
