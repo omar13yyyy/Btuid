@@ -1,4 +1,3 @@
-
 // Copyright 2025 Omar Alhaj Ali
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { randomBytes } from "crypto";
+import { randomBytes, createHash } from "crypto";
+
 import fs from "fs";
 
 export interface DegreeConfig {
@@ -31,7 +31,7 @@ export interface RestConfigData {
   indexInCurrentDepth: bigint;
   startValue: bigint;
   usedIdCount: bigint;
-  code: {[key: string]: string[]};
+  code: { [key: string]: string[] };
 }
 export type ConstructorParams = {
   degreeConfig?: DegreeConfig;
@@ -39,11 +39,11 @@ export type ConstructorParams = {
   displacementRate?: number;
   restConfigData?: RestConfigData | null;
   path?: string;
-  saveTime? : number;
+  saveTime?: number;
 };
 export class BtuidGenerator {
-  private  readonly HEX_LENGTH = 16;
-  private  readonly EXTRALENGTH = 16;
+  private readonly HEX_LENGTH = 16;
+  private readonly EXTRALENGTH = 16;
 
   private saveTime: number;
   private degreeConfig: DegreeConfig;
@@ -64,9 +64,9 @@ export class BtuidGenerator {
     indexInCurrentDepth: 0n,
     startValue: 0n,
     usedIdCount: 0n,
-    code : {}
+    code: {},
   };
-  private ExtraKeys :string[]= [
+  private ExtraKeys: string[] = [
     "g",
     "h",
     "i",
@@ -120,7 +120,7 @@ export class BtuidGenerator {
     "Ø",
     "ø",
   ];
-  private ExtraKeysForExtraUUID: string []= [
+  private ExtraKeysForExtraUUID: string[] = [
     "g",
     "h",
     "i",
@@ -174,7 +174,7 @@ export class BtuidGenerator {
     "Ø",
     "ø",
   ];
-  private extraKeysMap : { [key: string]: string }= {
+  private extraKeysMap: { [key: string]: string } = {
     "0": "0",
     "1": "1",
     "2": "2",
@@ -244,7 +244,7 @@ export class BtuidGenerator {
     Ø: "1",
     ø: "1",
   };
-  private primeryKey :string[]= [
+  private primeryKey: string[] = [
     "0",
     "1",
     "2",
@@ -302,9 +302,9 @@ export class BtuidGenerator {
     displacementRate = 10,
     restConfigData = null,
     path = "",
-    saveTime = 86400 
+    saveTime = 86400,
   }: ConstructorParams) {
-    this.saveTime=saveTime;
+    this.saveTime = saveTime;
 
     this.startValue = startValue;
 
@@ -329,37 +329,42 @@ export class BtuidGenerator {
     this.chunkCount = BigInt(this.degree * 2) ** BigInt(this.depth);
     this.chunkLength = this.length / this.chunkCount;
     this.data.degree = this.degree;
-    this.restConfigData.chunkLength=this.chunkLength;
+    this.restConfigData.chunkLength = this.chunkLength;
     this.restConfigData.degree = this.degree;
     this.restConfigData.startValue = this.startValue;
     this.restConfigData.code = this.equalKeys;
-          this.restConfigData.degree=this.degree;
+    this.restConfigData.degree = this.degree;
 
     this.intiEqualKeys();
     if (!fs.existsSync(path)) {
-    this.syncSaveObject(`${path}`, this.restConfigData);
-    }  
+      this.syncSaveObject(`${path}`, this.restConfigData);
+    }
     if (restConfigData) {
       this.depth = restConfigData.depth;
       this.degree = restConfigData.degree;
       this.chunkLength = BigInt(restConfigData.chunkLength);
-      this.indexInCurrentDepth =  BigInt(restConfigData.indexInCurrentDepth);
-      this.startValue =  BigInt(restConfigData.startValue);
-      this.usedIdCount =  BigInt(restConfigData.usedIdCount);
-      this.equalKeys = restConfigData.code
+      this.indexInCurrentDepth = BigInt(restConfigData.indexInCurrentDepth);
+      this.startValue = BigInt(restConfigData.startValue);
+      this.usedIdCount = BigInt(restConfigData.usedIdCount);
+      this.equalKeys = restConfigData.code;
     } else {
       this.restConfigData = this.readObject(path);
       if (this.restConfigData) {
         this.depth = this.restConfigData.depth;
         this.degree = this.restConfigData.degree;
-        this.chunkLength =  BigInt(this.restConfigData.chunkLength);
-        this.indexInCurrentDepth =  BigInt(this.restConfigData.indexInCurrentDepth);
-        this.startValue =  BigInt(this.restConfigData.startValue);
-        this.usedIdCount =  BigInt(this.restConfigData.usedIdCount);
+        this.chunkLength = BigInt(this.restConfigData.chunkLength);
+        this.indexInCurrentDepth = BigInt(
+          this.restConfigData.indexInCurrentDepth
+        );
+        this.startValue = BigInt(this.restConfigData.startValue);
+        this.usedIdCount = BigInt(this.restConfigData.usedIdCount);
         this.equalKeys = this.restConfigData.code;
-        console.log(this.restConfigData.code)
       }
     }
+    console.log(this.equalKeys)
+    
+    console.log(this.extraKeysMap)
+
     setInterval(() => {
       this.saveObject(`${path}`, this.restConfigData);
     }, this.saveTime);
@@ -376,20 +381,43 @@ export class BtuidGenerator {
   }
   public getExtraBtuid(): string {
     let extra = "-";
-    extra += randomBytes(Math.ceil(this.EXTRALENGTH / 2)).toString('hex').slice(0, this.EXTRALENGTH); 
+    extra += randomBytes(Math.ceil(this.EXTRALENGTH / 2))
+      .toString("hex")
+      .slice(0, this.EXTRALENGTH);
     return this.bigIntToHex(this.getId()) + extra;
   }
 
-  
-  public getEncodeBtuid(): string {
-    return this.encode(this.getBtuid());
+  textToUnique16Numbers(text: string): number[] {
+    const baseArray = Array.from({ length: 16 }, (_, i) => i);
+
+    // نستخدم sha256 للحصول على قيمة ثابتة بناءً على النص
+    const hash = createHash("sha256").update(text).digest();
+
+    // خلط يعتمد على الـ hash
+    for (let i = 15; i > 0; i--) {
+      const swapIndex = hash[i] % (i + 1);
+      [baseArray[i], baseArray[swapIndex]] = [
+        baseArray[swapIndex],
+        baseArray[i],
+      ];
+    }
+
+    return baseArray;
   }
+  public encodeFromExtra(encodeHex: string, key: string) {
+    const first16 = encodeHex.slice(0, 16);
+    let shuffledIndices =this.textToUnique16Numbers(key)
+    let shuffled = this.shuffleText(first16,shuffledIndices)
+
+    const last17 = encodeHex.slice(-17);
+    return shuffled + last17;
+  }
+
   public getBtuid(): string {
     return this.bigIntToHex(this.getId());
   }
   public getId(): bigint {
     let start: bigint = 0n;
-
 
     start = this.getNextInDepthAndIndex(
       this.depth,
@@ -399,12 +427,12 @@ export class BtuidGenerator {
       this.startValue,
       this.usedIdCount
     );
-    
+
     this.indexInCurrentDepth++;
     this.restConfigData.indexInCurrentDepth = this.indexInCurrentDepth;
     if (this.indexInCurrentDepth >= this.chunkCount) {
       this.indexInCurrentDepth = 0n;
-          this.restConfigData.indexInCurrentDepth = this.indexInCurrentDepth;
+      this.restConfigData.indexInCurrentDepth = this.indexInCurrentDepth;
 
       this.usedIdCount++;
       this.restConfigData.usedIdCount = this.usedIdCount;
@@ -443,7 +471,6 @@ export class BtuidGenerator {
     startValue: bigint,
     usedIdCount: bigint
   ): bigint {
-
     const usedItemInlastLevel = BigInt((2 * degree - 1) * (depth - 1));
     const multiPart = chunkLength * index;
     const start: bigint = startValue + usedItemInlastLevel + multiPart;
@@ -459,58 +486,54 @@ export class BtuidGenerator {
       chars.push(this.encodeOneChar(hex.charAt(i)));
     }
     editHexText = chars.join("");
-      let extra = "-";
-    extra += randomBytes(Math.ceil(this.EXTRALENGTH / 2)).toString('hex').slice(0, this.EXTRALENGTH); 
-    return editHexText +extra; // The maximum is exclusive and the minimum is inclusive
+
+    let extra = "-";
+    extra += randomBytes(Math.ceil(this.EXTRALENGTH / 2))
+      .toString("hex")
+      .slice(0, this.EXTRALENGTH);
+    return editHexText + extra;
   }
-  public decodeToBigint(encodeHex: string): bigint {
+   shuffleText(text: string,key :number[]): string {
+  if (text.length !== 16) throw new Error("Text must be exactly 16 characters");
+
+  const chars = text.split('');
+
+  const shuffled = key.map(i => this.encodeOneChar(chars[i])).join('');
+  return shuffled;
+}
+ unshuffleText(shuffled: string, key: number[]): string {
+  if (shuffled.length !== 16 || key.length !== 16) throw new Error("Invalid input");
+
+  const result = Array(16);
+  key.forEach((originalIndex, i) => {
+    result[originalIndex] = this.decodeOneChar(shuffled[i]);
+  });
+  return result.join('');
+}
+  public decodeToBtuid(encodeHex: string, key: string): string {
     //TODO Raise performance all function ;
-        const first16 = encodeHex.slice(0, 16);
 
-// أخذ آخر 17 خانة
-        const last17 = encodeHex.slice(-17);
+    const first16 = encodeHex.slice(0, 16);
+    let keyNumbers =this.textToUnique16Numbers(key)
+   const result= this.unshuffleText(first16,keyNumbers)
+    const last17 = encodeHex.slice(-17);
 
-    let editHexText;
-    let chars: any = [];
-    for (let i = 0; i < this.HEX_LENGTH; i++) {
-      chars.push(this.decodeOneChar(first16.charAt(i)));
-    }
-    editHexText = chars.join("");
-    
-    return BigInt("0x" + editHexText);
-  }
-  public decodeToBtuid(encodeHex: string): string {
-    //TODO Raise performance all function ;
-    //TODO Raise performance all function ;
-        const first16 = encodeHex.slice(0, 16);
-
-        const last17 = encodeHex.slice(-17);
-
-    let editHexText;
-    let chars: any = [];
-    for (let i = 0; i < this.HEX_LENGTH; i++) {
-      chars.push(this.decodeOneChar(first16.charAt(i)));
-    }
-    editHexText = chars.join("");
-
-    return editHexText+last17;
+    return result + last17;
   }
   private encodeOneChar(char: string): string {
     //TODO Raise performance this.equalKeys[`${char}`] ;
     let equalIndex = this.equalKeys[`${char}`];
-
     let index = this.getRandomInt(0, equalIndex.length);
+    console.log(`encode : ${char} to ${this.equalKeys[`${char}`][index]} `)
 
     return this.equalKeys[`${char}`][index];
   }
   private decodeOneChar(char: string): string {
     //TODO Raise performance this.equalKeys[`${char}`] ;
-    this.extraKeysMap[`${char}`];
-
+    console.log(`decode : ${char} to ${this.extraKeysMap[`${char}`]} `)
     return this.extraKeysMap[`${char}`];
   }
-  private getRandomInt( min:number , max:number ) {
-    
+  private getRandomInt(min: number, max: number) {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
@@ -520,7 +543,7 @@ export class BtuidGenerator {
     for (let i = 0; i < primeryKeyCount; i++) {
       let index = this.getRandomInt(0, this.primeryKey.length);
       let primeryKeyMapKey = this.primeryKey[index];
-        this.primeryKey.splice(index, 1);
+      this.primeryKey.splice(index, 1);
 
       let extraKeyForPrimeryKeyCount = this.getRandomInt(2, 4);
       for (let j = 0; j < extraKeyForPrimeryKeyCount; j++) {
@@ -536,21 +559,25 @@ export class BtuidGenerator {
     }
   }
 
-  syncSaveObject( path:string,obj:RestConfigData) {
-    const jsonString = JSON.stringify(obj, (key, value) =>
-  typeof value === 'bigint' ? value.toString() : value
-, 2);
+  syncSaveObject(path: string, obj: RestConfigData) {
+    const jsonString = JSON.stringify(
+      obj,
+      (key, value) => (typeof value === "bigint" ? value.toString() : value),
+      2
+    );
     fs.writeFileSync(`${path}`, jsonString, "utf8");
   }
 
-  saveObject( path:string,obj:RestConfigData) {
-    const jsonString = JSON.stringify(obj, (key, value) =>
-  typeof value === 'bigint' ? value.toString() : value
-, 2);
+  saveObject(path: string, obj: RestConfigData) {
+    const jsonString = JSON.stringify(
+      obj,
+      (key, value) => (typeof value === "bigint" ? value.toString() : value),
+      2
+    );
     fs.writeFile(`${path}`, jsonString, "utf8", () => {});
   }
 
-  readObject(path:string) {
+  readObject(path: string) {
     if (!fs.existsSync(`${path}`)) {
       return null;
     }
@@ -558,11 +585,11 @@ export class BtuidGenerator {
     const fileData = fs.readFileSync(`${path}`, "utf8");
 
     const parsedObject = JSON.parse(fileData, (key, value) => {
-  if (typeof value === 'string' && /^\d+n$/.test(value)) {
-    return BigInt(value.slice(0, -1));
-  }
-  return value;
-});
+      if (typeof value === "string" && /^\d+n$/.test(value)) {
+        return BigInt(value.slice(0, -1));
+      }
+      return value;
+    });
     return parsedObject;
   }
 }

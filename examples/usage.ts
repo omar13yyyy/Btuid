@@ -18,22 +18,22 @@ import path from 'path';
 const filePath = path.join(__dirname, 'dataTableName.json');
 const generator = new BtuidGenerator( {path: filePath,saveTime :3600} );
     const extraBtuid = generator.getExtraBtuid(); //get hex btuid 
-    console.log(extraBtuid) //06e77028e74c0082-26c4838e4a1f408b
+    console.log("extraBtuid : ",extraBtuid) //06e77028e74c0082-26c4838e4a1f408b
     
     const BigIntbtuid = generator.getId();//get bigint id 
     console.log(BigIntbtuid) //812356443328774771
 
-    const encodeBtuid =generator.getEncodeBtuid()  //get encode text id 
-    console.log(encodeBtuid) //0fa4HX9a_fed04€4-d83f6a3a849921a4
 
-    const decodeBtuid = generator.decodeToBtuid(encodeBtuid); //convert encoded btuid text to hex
-    console.log(decodeBtuid) //0fa4b39a3fed0464-d83f6a3a849921a4
+
+
+
+    //Under development
+    const encodeBtuid2 = generator.encodeFromExtra(extraBtuid,"hello"); //convert encoded btuid text to hex
+    console.log("encodeBtuid2 : ",encodeBtuid2) //Nfi£g39k¥feoNX6£-d83f6a3a849921a4
+
+    const decodeBtuid2 = generator.decodeToBtuid(encodeBtuid2,"hello"); //convert encoded btuid text to hex
+    console.log("decodeBtuid2 : ",decodeBtuid2) //0fa4b39a3fed0464-d83f6a3a849921a4
     
-    const encodeBtuid2 = generator.encodeFromExtra("0fa4b39a3fed0464-d83f6a3a849921a4"); //convert encoded btuid text to hex
-    console.log(encodeBtuid2) //Nfi£g39k¥feoNX6£-d83f6a3a849921a4
-
-   const decodeBtuidBigint= generator.decodeToBigint(encodeBtuid) //convert encoded btuid text to bigint
-    console.log(decodeBtuidBigint) //1127223281828299876
 
 
 
