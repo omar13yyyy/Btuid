@@ -28,6 +28,9 @@ const generator = new BtuidGenerator( {path: filePath,saveTime :3600} );
 
     const decodeBtuid = generator.decodeToBtuid(encodeBtuid); //convert encoded btuid text to hex
     console.log(decodeBtuid) //0fa4b39a3fed0464-d83f6a3a849921a4
+    
+    const encodeBtuid2 = generator.encodeFromExtra("0fa4b39a3fed0464-d83f6a3a849921a4"); //convert encoded btuid text to hex
+    console.log(encodeBtuid2) //Nfi£g39k¥feoNX6£-d83f6a3a849921a4
 
    const decodeBtuidBigint= generator.decodeToBigint(encodeBtuid) //convert encoded btuid text to bigint
     console.log(decodeBtuidBigint) //1127223281828299876
