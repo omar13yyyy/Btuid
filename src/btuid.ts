@@ -448,32 +448,41 @@ export class BtuidGenerator {
       chars.push(this.encodeOneChar(hex.charAt(i)));
     }
     editHexText = chars.join("");
-
-    return editHexText; // The maximum is exclusive and the minimum is inclusive
+      let extra = "-";
+    extra += randomBytes(Math.ceil(this.EXTRALENGTH / 2)).toString('hex').slice(0, this.EXTRALENGTH); 
+    return editHexText +extra; // The maximum is exclusive and the minimum is inclusive
   }
   public decodeToBigint(encodeHex: string): bigint {
     //TODO Raise performance all function ;
+        const first16 = encodeHex.slice(0, 16);
+
+// أخذ آخر 17 خانة
+        const last17 = encodeHex.slice(-17);
 
     let editHexText;
     let chars: any = [];
     for (let i = 0; i < this.HEX_LENGTH; i++) {
-      chars.push(this.decodeOneChar(encodeHex.charAt(i)));
+      chars.push(this.decodeOneChar(first16.charAt(i)));
     }
     editHexText = chars.join("");
-
+    
     return BigInt("0x" + editHexText);
   }
   public decodeToBtuid(encodeHex: string): string {
     //TODO Raise performance all function ;
+    //TODO Raise performance all function ;
+        const first16 = encodeHex.slice(0, 16);
+
+        const last17 = encodeHex.slice(-17);
 
     let editHexText;
     let chars: any = [];
     for (let i = 0; i < this.HEX_LENGTH; i++) {
-      chars.push(this.decodeOneChar(encodeHex.charAt(i)));
+      chars.push(this.decodeOneChar(first16.charAt(i)));
     }
     editHexText = chars.join("");
 
-    return editHexText;
+    return editHexText+last17;
   }
   private encodeOneChar(char: string): string {
     //TODO Raise performance this.equalKeys[`${char}`] ;

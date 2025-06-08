@@ -24,10 +24,10 @@ const generator = new BtuidGenerator( {path: filePath} );
     console.log(BigIntbtuid) //812356443328774771
 
     const encodeBtuid =generator.getEncodeBtuid()  //get encode text id 
-    console.log(encodeBtuid) //EIa4F39a3ISdt46G
+    console.log(encodeBtuid) //0fa4HX9a_fed04€4-d83f6a3a849921a4
 
     const decodeBtuid = generator.decodeToBtuid(encodeBtuid); //convert encoded btuid text to hex
-    console.log(decodeBtuid) //0fa4b39a3fed0464
+    console.log(decodeBtuid) //0fa4b39a3fed0464-d83f6a3a849921a4
 
    const decodeBtuidBigint= generator.decodeToBigint(encodeBtuid) //convert encoded btuid text to bigint
     console.log(decodeBtuidBigint) //1127223281828299876n
