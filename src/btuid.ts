@@ -24,7 +24,7 @@ export interface DegreeConfig {
   addingPaddingSize: number;
   degree: number;
 }
-interface RestConfigData {
+export interface RestConfigData {
   depth: number;
   degree: number;
   chunkLength: bigint;
@@ -32,7 +32,7 @@ interface RestConfigData {
   startValue: bigint;
   usedIdCount: bigint;
 }
-type ConstructorParams = {
+export type ConstructorParams = {
   degreeConfig?: DegreeConfig;
   startValue?: bigint;
   displacementRate?: number;
