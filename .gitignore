@@ -6,7 +6,7 @@ package-lock.json
 .npmignore 
 app.ts
 dist/
-
+test/
 # IDEs
 .vscode/
 .fleet/

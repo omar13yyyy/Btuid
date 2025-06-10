@@ -6,6 +6,7 @@ package-lock.json
 .gitignore
 dist/
 app.ts
+test/
 
 # IDEs
 .vscode/

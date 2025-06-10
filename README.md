@@ -26,13 +26,14 @@
 
 | Feature            | `btuid` 🔥                | `uuid v4` 🎲              | `nanoid` ✨            |
 | ------------------ | ------------------------- | ------------------------- | ---------------------- |
-| **generate Speed** | ⚡️ Very fast             | 🐢 Slower                 | ⚡️ Fast               |
-| **Security**       | ✅ High                   | ✅ High                   | ✅ High                |
+| **generate Speed** | ⚡️ Very fast              | 🐢 Slower                 | ⚡️ Fast               |
+| **Security**       | ✅ High but less than v4  | ✅ High                   | ✅ High                |
 | **Length**         | 🔴 Long (32 chars + '-')  | 🔴 Long (36 chars)        | 🟡 Medium (~21 chars) |
 | **Index-friendly** | ✅ B/B+Tree optimized     | ❌ No                     | ❌ No                  |
 | **Predictability** | ✅ Unpredictable          | ✅ Unpredictable          | ✅ Unpredictable       |
 | **DB Performance** | ✅ Excellent for indexing | ❌ Poor due to randomness | ❌ Poor for indexing   |
-| **Dependencies**   | ❌ Zero                   | ✅ Requires uuid lib      | ✅ Requires nanoid lib |
+| **Dependencies**   | ✅ Zero                   | ❌ Requires uuid lib      | ❌ Requires nanoid lib |
+| **Uniqueness**     | ✅ best                   | ✅ high                   | ✅ high                  |
 
 ---
 
@@ -59,25 +60,6 @@ const generator = new BtuidGenerator({ path: filePath });
 
 const extraBtuid = generator.getExtraBtuid(); // get hex btuid
 console.log(extraBtuid); // 06e77028e74c0082-26c4838e4a1f408b
-
-const BigIntbtuid = generator.getId(); // get bigint id
-console.log(BigIntbtuid); // 812356443328774771
-
-
-//Under development
-
-const encodeBtuid = generator.getEncodeBtuid(); // get encoded text id
-console.log(encodeBtuid); // 0fa4HX9a_fed04€4-d83f6a3a849921a4
-
-const decodeBtuid = generator.decodeToBtuid(encodeBtuid); // convert encoded btuid text to hex
-
-console.log(decodeBtuid); // 0fa4b39a3fed0464-d83f6a3a849921a4
-const encodeBtuid2 = generator.encodeFromExtra(decodeBtuid); //convert encoded btuid text to hex
-console.log(encodeBtuid2) //Nfi£g39k¥feoNX6£-d83f6a3a849921a4
-
-const decodeBtuidBigint = generator.decodeToBigint(encodeBtuid); // convert encoded btuid text to bigint
-console.log(decodeBtuidBigint); // 1127223281828299876n
-```
 
 ---
 
