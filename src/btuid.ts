@@ -41,6 +41,8 @@ export type ConstructorParams = {
   path?: string;
   saveTime?: number;
   hexLength? :number;
+  randomLength? :number;
+
 };
 export class BtuidGenerator {
   private  HEX_LENGTH = 16;
@@ -92,11 +94,12 @@ export class BtuidGenerator {
     DegreeComplications = 1,
     path = "",
     saveTime = 86400,
-    hexLength=16
+    hexLength=16,
+    randomLength=16
   }: ConstructorParams) {
     this.HEX_LENGTH =hexLength
        this.length = 16n ** BigInt(this.HEX_LENGTH);
-
+    this.EXTRALENGTH =randomLength
     this.saveTime = saveTime;
 
     this.startValue = startValue;
