@@ -175,7 +175,7 @@ export class BtuidGenerator {
   public getBtuid(): string {
     return this.bigIntToHex(this.getId());
   }
-  public getId(): bigint {
+  private getId(): bigint {
     let start: bigint = 0n;
 
     start = this.getNextInDepthAndIndex(
