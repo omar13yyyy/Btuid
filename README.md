@@ -105,7 +105,8 @@ const generator = new BtuidGenerator({
   startValue: startValue,
   displacementRate: displacementRate,
   path: filePath,
-  saveTime: saveTime
+  saveTime: saveTime,
+  hexLength:hexPartLength //beta
 });
 ```
 

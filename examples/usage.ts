@@ -16,7 +16,7 @@ import path from 'path';
 
 
 const filePath = path.join(__dirname, 'dataTableName.json');
-const generator = new BtuidGenerator( {path: filePath,saveTime :3600,DegreeComplications:3} );
+const generator = new BtuidGenerator( {path: filePath,saveTime :3600,DegreeComplications:3,hexLength:16} );
     const extraBtuid = generator.getExtraBtuid(); //get  btuid 
     console.log(extraBtuid) //06e77028e74c0082-26c4838e4a1f408b
 

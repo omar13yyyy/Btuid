@@ -15,7 +15,7 @@ import { randomBytes } from "crypto";
 
 import fs from "fs";
 
-export interface DegreeConfig {
+export interface DegreeConfig { 
   pageSize: number;
   keySize: number;
   TIDSize: number;
@@ -40,10 +40,11 @@ export type ConstructorParams = {
   DegreeComplications? :number ,
   path?: string;
   saveTime?: number;
+  hexLength? :number;
 };
 export class BtuidGenerator {
-  private readonly HEX_LENGTH = 16;
-  private readonly EXTRALENGTH = 16;
+  private  HEX_LENGTH = 16;
+  private  EXTRALENGTH = 16;
 
   private saveTime: number;
   private degreeConfig: DegreeConfig;
@@ -86,12 +87,16 @@ export class BtuidGenerator {
       degree: 0,
     },
     startValue = 0n,
-    displacementRate = 10,
+    displacementRate = 6,
     restConfigData = null,
     DegreeComplications = 1,
     path = "",
     saveTime = 86400,
+    hexLength=16
   }: ConstructorParams) {
+    this.HEX_LENGTH =hexLength
+       this.length = 16n ** BigInt(this.HEX_LENGTH);
+
     this.saveTime = saveTime;
 
     this.startValue = startValue;
